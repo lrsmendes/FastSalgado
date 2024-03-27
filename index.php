@@ -50,6 +50,7 @@
     </style>
 </head>
 <body>
+<a href="login.php">Login</a>
 <div class="container">
     <h1>FastImóveis</h1>
     <div class="dropdown">
