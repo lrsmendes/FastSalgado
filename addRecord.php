@@ -6,6 +6,7 @@ $dbPassword = "";
 
 // Retrieve form data from request
 $endereco = $_POST["endereco"] ?? "";
+$cidade = $_POST["cidade"] ?? "";
 $categoria = $_POST["categoria"] ?? "";
 $preco = $_POST["preco"] ?? "";
 $nome_vendedor = $_POST["nome_vendedor"] ?? "";
@@ -52,17 +53,18 @@ if ($uploadOk == 0) {
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             // SQL query to insert a new record
-            $sql = "INSERT INTO imoveis (endereco, categoria, preco, nome_vendedor, telefone_vendedor, email_vendedor, status, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO imoveis (endereco, cidade, categoria, preco, nome_vendedor, telefone_vendedor, email_vendedor, status, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(1, $endereco);
-            $stmt->bindParam(2, $categoria);
-            $stmt->bindParam(3, $preco);
-            $stmt->bindParam(4, $nome_vendedor);
-            $stmt->bindParam(5, $telefone_vendedor);
-            $stmt->bindParam(6, $email_vendedor);
-            $stmt->bindParam(7, $status);
-            $stmt->bindParam(8, $targetFile);
+            $stmt->bindParam(2, $cidade);
+            $stmt->bindParam(3, $categoria);
+            $stmt->bindParam(4, $preco);
+            $stmt->bindParam(5, $nome_vendedor);
+            $stmt->bindParam(6, $telefone_vendedor);
+            $stmt->bindParam(7, $email_vendedor);
+            $stmt->bindParam(8, $status);
+            $stmt->bindParam(9, $targetFile);
 
             // Execute the SQL query to insert the new record
             $stmt->execute();

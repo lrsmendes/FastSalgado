@@ -8,17 +8,19 @@ try {
 
         // Obter os dados do formulário
         $endereco = $_POST["endereco"] ?? null;
+        $cidade = $_POST["cidade"] ?? null;
         $categoria = $_POST["categoria"] ?? null;
         // Adicione outros campos de entrada aqui
 
         // Verificar se os campos obrigatórios estão presentes
         if ($endereco !== null && $categoria !== null) {
             // Atualizar o registro no banco de dados
-            $updateQuery = "UPDATE imoveis SET endereco=?, categoria=? WHERE id=?";
+            $updateQuery = "UPDATE imoveis SET endereco=?, cidade=?, categoria=? WHERE id=?";
             $preparedStatement = $conn->prepare($updateQuery);
             $preparedStatement->bindParam(1, $endereco, PDO::PARAM_STR);
-            $preparedStatement->bindParam(2, $categoria, PDO::PARAM_STR);
-            $preparedStatement->bindParam(3, $recordId, PDO::PARAM_INT);
+            $preparedStatement->bindParam(2, $cidade, PDO::PARAM_STR);
+            $preparedStatement->bindParam(3, $categoria, PDO::PARAM_STR);
+            $preparedStatement->bindParam(4, $recordId, PDO::PARAM_INT);
 
             // Execute a consulta preparada
             $preparedStatement->execute();

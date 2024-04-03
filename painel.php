@@ -92,74 +92,77 @@ session_start();
         <br>
 
         <!-- Add Modal -->
-        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-<!-- Add Modal content -->
-<form method="post" action="addRecord.php" enctype="multipart/form-data">
-    <div class="modal-header">
-        <h5 class="modal-title" id="addModalLabel">Adicionar Novo Imóvel</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body">
-        <div class="mb-3">
-            <label for="foto" class="form-label">Foto:</label>
-            <input type="file" class="form-control" id="foto" name="foto">
-        </div>
-        <div class="mb-3">
-            <label for="endereco" class="form-label">Endereço:</label>
-            <input type="text" class="form-control" id="endereco" name="endereco">
-        </div>
-        <div class="mb-3">
-            <label for="categoria" class="form-label">Categoria:</label>
-            <select class="form-select" id="categoria" name="categoria">
-                <option value="Casa">Casa</option>
-                <option value="Apartamento">Apartamento</option>
-                <option value="Kitnet">Kitnet</option>
-                <option value="Sobrado">Sobrado</option>
-                <option value="Mansão">Mansão</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="preco" class="form-label">Preço:</label>
-            <input type="text" class="form-control" id="preco" name="preco">
-        </div>
-        <div class="mb-3">
-            <label for="nome_vendedor" class="form-label">Nome do Vendedor (Proprietário):</label>
-            <textarea class="form-control" id="nome_vendedor" name="nome_vendedor" rows="3"></textarea>
-        </div>
-        <div class="mb-3">
-            <label for="telefone_vendedor" class="form-label">Telefone do Vendedor (Proprietário):</label>
-            <textarea class="form-control" id="telefone_vendedor" name="telefone_vendedor" rows="3"></textarea>
-        </div>
-        <div class="mb-3">
-            <label for="email_vendedor" class="form-label">Email do Vendedor (Proprietário):</label>
-            <textarea class="form-control" id="email_vendedor" name="email_vendedor" rows="3"></textarea>
-        </div>
-        <div class="mb-3">
-            <label for="status" class="form-label">Status:</label>
-            <select class="form-select" id="status" name="status">
-                <option value="à_venda">à venda</option>
-                <option value="alugar">alugar</option>
-            </select>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-        <button type="submit" class="btn btn-primary">Adicionar</button>
-    </div>
-</form>
-
-
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="addRecord.php" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Adicionar Novo Imóvel</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="foto" class="form-label">Foto:</label>
+                        <input type="file" class="form-control" id="foto" name="foto">
+                    </div>
+                    <div class="mb-3">
+                        <label for="endereco" class="form-label">Endereço:</label>
+                        <input type="text" class="form-control" id="endereco" name="endereco">
+                    </div>
+                    <div class="mb-3">
+                        <label for="cidade" class="form-label">Cidade:</label>
+                        <input type="text" class="form-control" id="cidade" name="cidade">
+                    </div>
+                    <div class="mb-3">
+                        <label for="categoria" class="form-label">Categoria:</label>
+                        <select class="form-select" id="categoria" name="categoria">
+                            <option value="Casa">Casa</option>
+                            <option value="Apartamento">Apartamento</option>
+                            <option value="Kitnet">Kitnet</option>
+                            <option value="Sobrado">Sobrado</option>
+                            <option value="Mansão">Mansão</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="preco" class="form-label">Preço:</label>
+                        <input type="text" class="form-control" id="preco" name="preco">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nome_vendedor" class="form-label">Nome do Vendedor (Proprietário):</label>
+                        <textarea class="form-control" id="nome_vendedor" name="nome_vendedor" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="telefone_vendedor" class="form-label">Telefone do Vendedor (Proprietário):</label>
+                        <textarea class="form-control" id="telefone_vendedor" name="telefone_vendedor" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email_vendedor" class="form-label">Email do Vendedor (Proprietário):</label>
+                        <textarea class="form-control" id="email_vendedor" name="email_vendedor" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status:</label>
+                        <select class="form-select" id="status" name="status">
+                            <option value="à_venda">à venda</option>
+                            <option value="alugar">alugar</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                </div>
+            </form>
         </div>
+    </div>
+</div>
+
 
         <table id="imoveisTable" class="table table-striped">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Endereço</th>
+                    <th>Cidade</th>
                     <th>Categoria</th>
                     <th>Preço</th>
                     <th>Nome do Vendedor</th>
@@ -181,6 +184,7 @@ session_start();
                     <tr>
                         <td><?= $row['id'] ?></td>
                         <td><?= $row['endereco'] ?></td>
+                        <td><?= $row['cidade'] ?></td>
                         <td><?= $row['categoria'] ?></td>
                         <td><?= $row['preco'] ?></td>
                         <td><?= $row['nome_vendedor'] ?></td>
@@ -218,6 +222,10 @@ session_start();
                     <div class="mb-3">
                         <label for="endereco" class="form-label">Endereço:</label>
                         <input type="text" class="form-control" id="endereco" name="endereco" value="<?= $row['endereco'] ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="cidade" class="form-label">Cidade:</label>
+                        <input type="text" class="form-control" id="cidade" name="cidade" value="<?= $row['cidade'] ?>">
                     </div>
                     <div class="mb-3">
                         <label for="categoria" class="form-label">Categoria:</label>

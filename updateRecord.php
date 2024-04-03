@@ -9,13 +9,14 @@ try {
         $recordId = intval($recordIdStr);
 
         // Perform the record update
-        $updateQuery = "UPDATE imoveis SET endereco = ?, categoria = ? WHERE id=?";
+        $updateQuery = "UPDATE imoveis SET endereco = ?, cidade = ?,categoria = ? WHERE id=?";
         $updateStatement = $conn->prepare($updateQuery);
 
         // Replace "endereco" and "categoria" with your actual column names
         $updateStatement->bindParam(1, $_POST["endereco"]);
-        $updateStatement->bindParam(2, $_POST["categoria"]);
-        $updateStatement->bindParam(3, $recordId, PDO::PARAM_INT);
+        $updateStatement->bindParam(2, $_POST["cidade"]);
+        $updateStatement->bindParam(3, $_POST["categoria"]);
+        $updateStatement->bindParam(4, $recordId, PDO::PARAM_INT);
 
         $updateStatement->execute();
 
