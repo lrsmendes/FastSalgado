@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 27-Mar-2024 às 18:14
+-- Tempo de geração: 03-Abr-2024 às 20:33
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `imoveis` (
   `id` int(20) NOT NULL,
+  `cidade` varchar(100) NOT NULL,
   `endereco` varchar(255) NOT NULL,
   `categoria` varchar(50) DEFAULT NULL,
   `preco` decimal(10,2) NOT NULL,
@@ -43,16 +44,16 @@ CREATE TABLE `imoveis` (
 -- Extraindo dados da tabela `imoveis`
 --
 
-INSERT INTO `imoveis` (`id`, `endereco`, `categoria`, `preco`, `nome_vendedor`, `telefone_vendedor`, `email_vendedor`, `status`, `foto`) VALUES
-(1, 'avenida presidente wilson, 178, São Vicente', 'apartamento', 150000.00, 'Lucas Santos', '3490-8375', 'santos@gmail.com', 'à venda', 'img/figma.png'),
-(2, 'avenida presidente kennedy, 390, Praia Grande', 'apartamento', 200000.00, 'Maria Alves', '3380-9084', 'maria123@gmail.com', 'à venda', ''),
-(3, 'rua domingos costa, 400, Cubatão', 'Casa', 100000.50, 'Iago Teixeira', '3267-9327', 'teixeira@gmail.com', 'à venda', ''),
-(4, 'rua padre gastão, 1340, Praia Grande', 'Casa', 300000.80, 'Joaquim Maia', '98250-3798', 'joaquim980@gmail.com', 'à venda', ''),
-(5, 'avenida paulista, 5708, São Paulo', 'apartamento', 980000.00, 'Alfred Silva', '98720-8054', 'alfredsilva@gmail.com', 'à venda', ''),
-(6, 'rua saldanha da gama, 370, São Vicente', 'apartamento', 300000.00, 'João Simões', '3289-2157', 'johnsimoes@gmail.com', 'à venda', ''),
-(7, 'rua doutor jaime oliveira, 250, Guarujá', 'Casa', 350000.00, 'Sophia Alves', '96703-0548', 'alves2802@gmail.com', 'à venda', ''),
-(8, 'avenida guido mangioca, 99, Praia Grande', 'Casa', 150000.00, 'Marvado', '13997655041', 'lucas.mendes16@fatec.sp.gov.br', 'à_venda', ''),
-(9, 'aaaaaa', 'Casa', 1234.00, '1234', '1234', '1234', 'à_venda', 'img/101843880.jpg');
+INSERT INTO `imoveis` (`id`, `cidade`, `endereco`, `categoria`, `preco`, `nome_vendedor`, `telefone_vendedor`, `email_vendedor`, `status`, `foto`) VALUES
+(1, 'Praia Grande', 'avenida presidente wilson, 178, ', 'apartamento', 150000.00, 'Lucas Santos', '3490-8375', 'santos@gmail.com', 'à venda', 'img/figma.png'),
+(2, 'São Vicente', 'avenida presidente kennedy, 390, ', 'apartamento', 200000.00, 'Maria Alves', '3380-9084', 'maria123@gmail.com', 'à venda', ''),
+(3, 'Santos', 'rua domingos costa, 400, ', 'Casa', 100000.50, 'Iago Teixeira', '3267-9327', 'teixeira@gmail.com', 'à venda', ''),
+(4, 'Santos', 'rua padre gastão, 1340, ', 'Casa', 300000.80, 'Joaquim Maia', '98250-3798', 'joaquim980@gmail.com', 'à venda', ''),
+(5, 'Santos', 'avenida paulista, 5708, ', 'apartamento', 980000.00, 'Alfred Silva', '98720-8054', 'alfredsilva@gmail.com', 'à venda', ''),
+(6, 'Santos', 'rua saldanha da gama, 370, ', 'apartamento', 300000.00, 'João Simões', '3289-2157', 'johnsimoes@gmail.com', 'à venda', ''),
+(7, 'Santos', 'rua doutor jaime oliveira, 250, ', 'Casa', 350000.00, 'Sophia Alves', '96703-0548', 'alves2802@gmail.com', 'à venda', ''),
+(8, 'Santos', 'avenida guido mangioca, 99, ', 'Casa', 150000.00, 'Marvado', '13997655041', 'lucas.mendes16@fatec.sp.gov.br', 'à_venda', ''),
+(9, 'Santos', 'aaaaaa', 'Casa', 1234.00, '1234', '1234', '1234', 'à_venda', 'img/101843880.jpg');
 
 -- --------------------------------------------------------
 
