@@ -40,8 +40,11 @@ animateElement(".bg-img","right",100);
 animateElement(".hero-content","left",500);
 animateElement(".social-icon-list","bottom",500);
 animateElement(".card-1","left",500);
-animateElement(".card-2","right",500);
-
+animateElement(".card-2","left",500);
+animateElement(".card-3","right",500);
+animateElement(".card-4","right",500);
+animateElement(".card-5","left",500);
+animateElement(".card-6","left",500);
 
 
 modeChangeIcon.addEventListener("click" , () => {
