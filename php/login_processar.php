@@ -17,8 +17,10 @@ try {
 
     if ($row) {
         $nomeUsuario = $row["nome"];
+        $isAdmin = $row["isAdmin"]; // Adiciona isAdmin à sessão se o login for bem-sucedido
         session_start();
         $_SESSION["nomeUsuario"] = $nomeUsuario;
+        $_SESSION["isAdmin"] = $isAdmin; // Adiciona isAdmin à sessão
 
         // Verifica se é conta de administrador
         if ($email === "adminbr@gmail.com") {

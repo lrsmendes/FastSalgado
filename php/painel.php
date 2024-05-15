@@ -34,15 +34,9 @@ $isAdmin = isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1;
         }
     </style>
 </head>
-
 <body>
-    
-    <?php
-    $nomeUsuario = $_SESSION["nomeUsuario"];
-    if ($nomeUsuario != null) {
 
-        if (!isset($_SESSION["isAdmin"]) || $_SESSION["isAdmin"] != 1) {
-    ?>
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <!-- Container wrapper -->
@@ -92,6 +86,8 @@ $isAdmin = isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1;
     <!-- Body content -->
     <div class="container">
         <h2 class="mt-5">Listagem de Imóveis</h2>
+
+        <!-- Botão Adicionar Novo -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
             Adicionar novo
         </button>
@@ -99,6 +95,10 @@ $isAdmin = isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1;
         <br>
         <br>
 
+        <?php
+// Se o usuário for administrador, exiba as opções de adicionar, editar e excluir
+if ($isAdmin) {
+?>
         <!-- Add Modal -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -164,7 +164,11 @@ $isAdmin = isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1;
     </div>
 </div>
 
+<?php
+}
+?>
 
+        <!-- Tabela de Imóveis -->
         <table id="imoveisTable" class="table table-striped">
             <thead>
                 <tr>
@@ -189,74 +193,66 @@ $isAdmin = isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1;
 
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 ?>
-                    <tr>
-                        <td><?= $row['id'] ?></td>
-                        <td><?= $row['endereco'] ?></td>
-                        <td><?= $row['cidade'] ?></td>
-                        <td><?= $row['categoria'] ?></td>
-                        <td><?= $row['preco'] ?></td>
-                        <td><?= $row['nome_vendedor'] ?></td>
-                        <td><?= $row['telefone_vendedor'] ?></td>
-                        <td><?= $row['email_vendedor'] ?></td>
-                        <td><?= $row['status'] ?></td>
-                        <td>
-                            <i class="edit-icon icon-button" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['id'] ?>">
-                                <i class="fas fa-edit"></i>
-                            </i>
 
-                            <i class="delete-icon" type="button" class="btn btn-icon btn-danger" onclick="deleteRecord(<?= $row['id'] ?>)">
-                                <i class="fas fa-trash"></i>
-                            </i>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td><?= $row['id'] ?></td>
+                            <td><?= $row['endereco'] ?></td>
+                            <td><?= $row['cidade'] ?></td>
+                            <td><?= $row['categoria'] ?></td>
+                            <td><?= $row['preco'] ?></td>
+                            <td><?= $row['nome_vendedor'] ?></td>
+                            <td><?= $row['telefone_vendedor'] ?></td>
+                            <td><?= $row['email_vendedor'] ?></td>
+                            <td><?= $row['status'] ?></td>
+                            <?php
+// Se o usuário for administrador, exiba as opções de adicionar, editar e excluir
+if ($isAdmin) {
+?>
+                            <td>
+                                <!-- Botão Editar -->
+                                <i class="edit-icon icon-button" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['id'] ?>">
+                                    <i class="fas fa-edit"></i>
+                                </i>
 
-                    <!-- Delete Modal -->
-                    <div class="modal fade" id="deleteModal<?= $row['id'] ?>" tabindex="-1" aria-labelledby="deleteModalLabel<?= $row['id'] ?>" aria-hidden="true">
-                        <!-- Delete Modal content -->
-                    </div>
+                                <!-- Botão Deletar -->
+                                <i class="delete-icon" type="button" class="btn btn-icon btn-danger" onclick="deleteRecord(<?= $row['id'] ?>)">
+                                    <i class="fas fa-trash"></i>
+                                </i>
+                            </td>
+                            <?php
+}
+?>
+                        </tr>
 
-                    <!-- Edit Modal -->
-<div class="modal fade" id="editModal<?= $row['id'] ?>" tabindex="-1" aria-labelledby="editModalLabel<?= $row['id'] ?>" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form method="post" action="editRecord.php">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel<?= $row['id'] ?>">Editar Imóvel</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Input fields filled with existing record data -->
-                    <input type="hidden" name="recordId" value="<?= $row['id'] ?>">
-                    <div class="mb-3">
-                        <label for="endereco" class="form-label">Endereço:</label>
-                        <input type="text" class="form-control" id="endereco" name="endereco" value="<?= $row['endereco'] ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="cidade" class="form-label">Cidade:</label>
-                        <input type="text" class="form-control" id="cidade" name="cidade" value="<?= $row['cidade'] ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="categoria" class="form-label">Categoria:</label>
-                        <select class="form-select" id="categoria" name="categoria">
-                            <option value="Casa" <?= ($row['categoria'] == 'Casa') ? 'selected' : '' ?>>Casa</option>
-                            <option value="Apartamento" <?= ($row['categoria'] == 'Apartamento') ? 'selected' : '' ?>>Apartamento</option>
-                            <option value="Kitnet" <?= ($row['categoria'] == 'Kitnet') ? 'selected' : '' ?>>Kitnet</option>
-                            <option value="Sobrado" <?= ($row['categoria'] == 'Sobrado') ? 'selected' : '' ?>>Sobrado</option>
-                            <option value="Mansão" <?= ($row['categoria'] == 'Mansão') ? 'selected' : '' ?>>Mansão</option>
-                        </select>
-                    </div>
-					</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+                        <!-- Edit Modal -->
+                        <?php
+// Se o usuário for administrador, exiba as opções de adicionar, editar e excluir
+if ($isAdmin) {
+?>
+                        <div class="modal fade" id="editModal<?= $row['id'] ?>" tabindex="-1" aria-labelledby="editModalLabel<?= $row['id'] ?>" aria-hidden="true">
+                            <!-- Edit Modal content -->
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form method="post" action="editRecord.php">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editModalLabel<?= $row['id'] ?>">Editar Imóvel</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Formulário para editar imóvel -->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+}
+?>
 
-                    </div>
-					
                 <?php
                     }
                 } catch (PDOException $e) {
@@ -267,17 +263,19 @@ $isAdmin = isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1;
         </table>
     </div>
 
+    <!-- Scripts JavaScript -->
     <script>
+        // Função JavaScript para exclusão de registro
         function deleteRecord(recordId) {
-            if (confirm("Are you sure you want to delete this record?")) {
-                // AJAX delete request
+            if (confirm("Tem certeza de que deseja excluir este registro?")) {
+                // Solicitação de exclusão AJAX
                 $.ajax({
                     type: "POST",
                     url: "deleteRecord.php",
                     data: {recordId: recordId},
                     success: function (data) {
-                        // Handle the response (e.g., show a success message or refresh the page)
-                        location.reload(); // Refresh the page
+                        // Lidar com a resposta (por exemplo, mostrar uma mensagem de sucesso ou atualizar a página)
+                        location.reload(); // Atualiza a página
                     }
                 });
             }
@@ -290,6 +288,7 @@ $isAdmin = isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1;
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"></script>
     <script>
+        // Inicialização do DataTable
         $(document).ready(function () {
             $('#imoveisTable').DataTable({
                 "language": {
@@ -299,9 +298,6 @@ $isAdmin = isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1;
             });
         });
     </script>
-</body>
-<?php 
-}
-} // Add this closing brace ?>
 
+</body>
 </html>

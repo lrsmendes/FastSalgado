@@ -100,6 +100,9 @@
             <option value="" selected disabled>Escolha o tipo de imóvel</option>
             <option value="casa">Casa</option>
             <option value="apartamento">Apartamento</option>
+            <option value="kitnet">Kitnet</option>
+            <option value="sobrado">Sobrado</option>
+            <option value="mansao">Mansão</option>
         </select>
     </div>
     <button class="button" onclick="filterProperties()">Buscar</button>
