@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 15-Maio-2024 às 20:15
+-- Tempo de geração: 01/05/2024 às 12:51
 -- Versão do servidor: 10.4.32-MariaDB
--- versão do PHP: 8.2.12
+-- Versão do PHP: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `imoveis`
+-- Estrutura para tabela `imoveis`
 --
 
 CREATE TABLE `imoveis` (
@@ -41,7 +41,7 @@ CREATE TABLE `imoveis` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `imoveis`
+-- Despejando dados para a tabela `imoveis`
 --
 
 INSERT INTO `imoveis` (`id`, `cidade`, `endereco`, `categoria`, `preco`, `nome_vendedor`, `telefone_vendedor`, `email_vendedor`, `status`, `foto`) VALUES
@@ -53,14 +53,12 @@ INSERT INTO `imoveis` (`id`, `cidade`, `endereco`, `categoria`, `preco`, `nome_v
 (6, 'Santos', 'rua saldanha da gama, 370, ', 'apartamento', 300000.00, 'João Simões', '3289-2157', 'johnsimoes@gmail.com', 'à venda', ''),
 (7, 'Santos', 'rua doutor jaime oliveira, 250, ', 'Casa', 350000.00, 'Sophia Alves', '96703-0548', 'alves2802@gmail.com', 'à venda', ''),
 (8, 'Santos', 'avenida guido mangioca, 99, ', 'Casa', 150000.00, 'Marvado', '13997655041', 'lucas.mendes16@fatec.sp.gov.br', 'à_venda', ''),
-(9, 'Santos', 'aaaaaa', 'Casa', 1234.00, '1234', '1234', '1234', 'à_venda', 'img/101843880.jpg'),
-(10, 'Praia Grande', 'rua Ayrton Senna, 123', 'Casa', 3000000.00, 'Joao', '(13)34219807', 'jao@gmail.com', 'à_venda', 'img/casa2.jpg'),
-(11, 'São Vicente', 'rua José Silva,345', 'Sobrado', 40000.00, 'Cleiton', '(13)38979021', 'cleiton@gmail.com', 'à_venda', 'img/casa1.jpg');
+(9, 'Santos', 'aaaaaa', 'Casa', 1234.00, '1234', '1234', '1234', 'à_venda', 'img/101843880.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `usuarios`
+-- Estrutura para tabela `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -72,44 +70,45 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Extraindo dados da tabela `usuarios`
+-- Despejando dados para a tabela `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `isAdmin`) VALUES
-(4, 'JOAO', 'joao@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 1),
-(5, 'user', 'userbr@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 0);
+(1, 'admin', 'adminbr@gmail.com', '1234', 1),
+(2, 'usuario', 'userbr@gmail.com', '1234', 0),
+(3, 'zezinho', 'zezinho@gmail.com', 'ze', 0);
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices para tabela `imoveis`
+-- Índices de tabela `imoveis`
 --
 ALTER TABLE `imoveis`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `usuarios`
+-- Índices de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
 -- AUTO_INCREMENT de tabela `imoveis`
 --
 ALTER TABLE `imoveis`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
