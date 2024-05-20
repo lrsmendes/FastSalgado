@@ -87,18 +87,22 @@ $isAdmin = isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1;
     <div class="container">
         <h2 class="mt-5">Listagem de Imóveis</h2>
 
-        <!-- Botão Adicionar Novo -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
-            Adicionar novo
-        </button>
-
-        <br>
-        <br>
-
         <?php
 // Se o usuário for administrador, exiba as opções de adicionar, editar e excluir
 if ($isAdmin) {
 ?>
+        <!-- Botão Adicionar Novo -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+            Adicionar novo
+        </button>
+        <?php
+}
+?>
+
+        <br>
+        <br>
+
+  
         <!-- Add Modal -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -164,9 +168,6 @@ if ($isAdmin) {
     </div>
 </div>
 
-<?php
-}
-?>
 
         <!-- Tabela de Imóveis -->
         <table id="imoveisTable" class="table table-striped">
@@ -204,31 +205,32 @@ if ($isAdmin) {
                             <td><?= $row['telefone_vendedor'] ?></td>
                             <td><?= $row['email_vendedor'] ?></td>
                             <td><?= $row['status'] ?></td>
-                            <?php
+  
+                            <td>
+                                <?php
 // Se o usuário for administrador, exiba as opções de adicionar, editar e excluir
 if ($isAdmin) {
-?>
-                            <td>
+?>  
                                 <!-- Botão Editar -->
                                 <i class="edit-icon icon-button" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['id'] ?>">
                                     <i class="fas fa-edit"></i>
                                 </i>
+  
+
 
                                 <!-- Botão Deletar -->
                                 <i class="delete-icon" type="button" class="btn btn-icon btn-danger" onclick="deleteRecord(<?= $row['id'] ?>)">
                                     <i class="fas fa-trash"></i>
                                 </i>
-                            </td>
-                            <?php
+                                <?php
 }
 ?>
+                            </td>
+  
                         </tr>
 
                         <!-- Edit Modal -->
-                        <?php
-// Se o usuário for administrador, exiba as opções de adicionar, editar e excluir
-if ($isAdmin) {
-?>
+                        
                         <div class="modal fade" id="editModal<?= $row['id'] ?>" tabindex="-1" aria-labelledby="editModalLabel<?= $row['id'] ?>" aria-hidden="true">
                             <!-- Edit Modal content -->
                             <div class="modal-dialog">
@@ -249,9 +251,7 @@ if ($isAdmin) {
                                 </div>
                             </div>
                         </div>
-                        <?php
-}
-?>
+  
 
                 <?php
                     }
@@ -290,13 +290,14 @@ if ($isAdmin) {
     <script>
         // Inicialização do DataTable
         $(document).ready(function () {
-            $('#imoveisTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
-                },
-                "responsive": true
-            });
-        });
+    $('#imoveisTable').DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"
+        },
+        "responsive": true,
+        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
+    });
+});
     </script>
 
 </body>
