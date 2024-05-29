@@ -12,6 +12,7 @@ $preco = $_POST["preco"] ?? "";
 $nome_vendedor = $_POST["nome_vendedor"] ?? "";
 $telefone_vendedor = $_POST["telefone_vendedor"] ?? "";
 $email_vendedor = $_POST["email_vendedor"] ?? "";
+$descricao = $_POST["descricao"] ?? "";
 $status = $_POST["status"] ?? "";
 
 // File upload parameters
@@ -53,7 +54,7 @@ if ($uploadOk == 0) {
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             // SQL query to insert a new record
-            $sql = "INSERT INTO imoveis (endereco, cidade, categoria, preco, nome_vendedor, telefone_vendedor, email_vendedor, status, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO imoveis (endereco, cidade, categoria, preco, nome_vendedor, telefone_vendedor, email_vendedor, status, foto, descricao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(1, $endereco);
@@ -65,6 +66,7 @@ if ($uploadOk == 0) {
             $stmt->bindParam(7, $email_vendedor);
             $stmt->bindParam(8, $status);
             $stmt->bindParam(9, $targetFile);
+            $stmt->bindParam(10, $descricao);
 
             // Execute the SQL query to insert the new record
             $stmt->execute();
