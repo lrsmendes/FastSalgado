@@ -323,3 +323,29 @@ try {
         </li>
     </ul>
 </nav>
+
+ <!-- Scripts JavaScript -->
+    <script>
+        // Função JavaScript para exclusão de registro
+        function deleteRecord(recordId) {
+            if (confirm("Tem certeza de que deseja excluir este registro?")) {
+                // Solicitação de exclusão AJAX
+                $.ajax({
+                    type: "POST",
+                    url: "deleteRecord.php",
+                    data: {recordId: recordId},
+                    success: function (data) {
+                        // Lidar com a resposta (por exemplo, mostrar uma mensagem de sucesso ou atualizar a página)
+                        location.reload(); // Atualiza a página
+                    }
+                });
+            }
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"></script>
+    <script>
