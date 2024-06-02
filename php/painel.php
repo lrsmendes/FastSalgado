@@ -11,7 +11,7 @@ $nomeUsuario = $_SESSION["nomeUsuario"];
 $isAdmin = isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1;
 
 // Configurações de Paginação
-$total_reg = 10; // Número de registros por página
+$total_reg = 5; // Número de registros por página
 $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 $inicio = ($pagina - 1) * $total_reg;
 
@@ -298,18 +298,28 @@ try {
             </tbody>
         </table>
 
-        <!-- Paginação -->
-        <nav>
-            <ul class="pagination">
-                <li class="page-item <?= $pagina <= 1 ? 'disabled' : '' ?>">
-                    <a class="page-link" href="?pagina=<?= $pagina - 1 ?>" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
-                    <li class="page-item <?= $pagina == $i ? 'active' : '' ?>">
-                        <a class="page-link" href="?pagina=<?= $i ?>"><?= $i ?></a>
-                    </li>
-                <?php } ?>
-                <li class="page-item <?= $pagina >= $total_pages ? 'disabled' : '' ?>">
-                    <a class="page-link" href="?pagina=<?= $pagina + 1 ?>" aria
+<!-- Paginação -->
+<nav>
+    <ul class="pagination">
+        <!-- Botão para a página anterior -->
+        <li class="page-item <?= $pagina <= 1 ? 'disabled' : '' ?>">
+            <a class="page-link" href="?pagina=<?= $pagina - 1 ?>" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+
+        <!-- Números das páginas -->
+        <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
+            <li class="page-item <?= $pagina == $i ? 'active' : '' ?>">
+                <a class="page-link" href="?pagina=<?= $i ?>"><?= $i ?></a>
+            </li>
+        <?php } ?>
+
+        <!-- Botão para a próxima página -->
+        <li class="page-item <?= $pagina >= $total_pages ? 'disabled' : '' ?>">
+            <a class="page-link" href="?pagina=<?= $pagina + 1 ?>" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
