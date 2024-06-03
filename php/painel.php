@@ -46,6 +46,7 @@ try {
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <a class="navbar-brand mt-2 mt-lg-0" href="#">FastImóveis</a>
+                <a class="navbar-brand mt-2 mt-lg-0" href="pesquisar.php">Pesquisar</a>
             </div>
             <div class="d-flex align-items-center">
                 <a class="text-reset me-3" href="#"><i class="fas fa-shopping-cart"></i></a>
@@ -140,6 +141,7 @@ try {
             </div>
         </div>
 
+
         <!-- Tabela de Imóveis -->
         <table id="imoveisTable" class="table table-striped">
             <thead>
@@ -180,19 +182,19 @@ try {
                         <td><img src="<?= $row['foto'] ?>" alt="<?= $row['foto'] ?>" width="100"></td>
                         <td><?= $row['descricao'] ?></td>
                         <td>
-                            <?php if ($isAdmin) { ?>
-                                <!-- Botão Visualizar -->
-                                <a href="#" class="icon-button view-icon" data-bs-toggle="modal" data-bs-target="#viewModal-<?= $row['id'] ?>">
+                            <!-- Botão Visualizar -->
+                            <a href="#" class="icon-button view-icon" data-bs-toggle="modal" data-bs-target="#viewModal-<?= $row['id'] ?>">
                                     <i class="fas fa-eye"></i>
                                 </a>
+                            <?php if ($isAdmin) { ?>
                                 <!-- Botão Editar -->
-                                <a href="#" class="icon-button edit-icon" data-bs-toggle="modal" data-bs-target="#editModal-<?= $row['id'] ?>">
+                                <i class="edit-icon icon-button" data-bs-toggle="modal" data-bs-target="#editModal<?= $row['id'] ?>">
                                     <i class="fas fa-edit"></i>
-                                </a>
+                                </i>
                                 <!-- Botão Excluir -->
-                                <a href="deleteRecord.php?id=<?= $row['id'] ?>" class="icon-button delete-icon" onclick="return confirm('Você tem certeza que deseja excluir este imóvel?');">
+                                <i class="delete-icon" type="button" class="btn btn-icon btn-danger" onclick="deleteRecord(<?= $row['id'] ?>)">
                                     <i class="fas fa-trash"></i>
-                                </a>
+                                </i>
                             <?php } ?>
                         </td>
                     </tr>
@@ -225,75 +227,78 @@ try {
                     </div>
 
                     <!-- Edit Modal -->
-                    <div class="modal fade" id="editModal-<?= $row['id'] ?>" tabindex="-1" aria-labelledby="editModalLabel-<?= $row['id'] ?>" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form method="post" action="updateRecord.php" enctype="multipart/form-data">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="editModalLabel-<?= $row['id'] ?>">Editar Imóvel</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- Campos do Formulário -->
-                                        <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                                        <div class="mb-3">
-                                            <label for="edit_foto_<?= $row['id'] ?>" class="form-label">Foto:</label>
-                                            <input type="file" class="form-control" id="edit_foto_<?= $row['id'] ?>" name="foto">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="edit_endereco_<?= $row['id'] ?>" class="form-label">Endereço:</label>
-                                            <input type="text" class="form-control" id="edit_endereco_<?= $row['id'] ?>" name="endereco" value="<?= $row['endereco'] ?>">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="edit_cidade_<?= $row['id'] ?>" class="form-label">Cidade:</label>
-                                            <input type="text" class="form-control" id="edit_cidade_<?= $row['id'] ?>" name="cidade" value="<?= $row['cidade'] ?>">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="edit_categoria_<?= $row['id'] ?>" class="form-label">Categoria:</label>
-                                            <select class="form-select" id="edit_categoria_<?= $row['id'] ?>" name="categoria">
-                                                <option value="Casa" <?= $row['categoria'] == 'Casa' ? 'selected' : '' ?>>Casa</option>
-                                                <option value="Apartamento" <?= $row['categoria'] == 'Apartamento' ? 'selected' : '' ?>>Apartamento</option>
-                                                <option value="Kitnet" <?= $row['categoria'] == 'Kitnet' ? 'selected' : '' ?>>Kitnet</option>
-                                                <option value="Sobrado" <?= $row['categoria'] == 'Sobrado' ? 'selected' : '' ?>>Sobrado</option>
-                                                <option value="Mansão" <?= $row['categoria'] == 'Mansão' ? 'selected' : '' ?>>Mansão</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="edit_preco_<?= $row['id'] ?>" class="form-label">Preço:</label>
-                                            <input type="text" class="form-control" id="edit_preco_<?= $row['id'] ?>" name="preco" value="<?= $row['preco'] ?>">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="edit_nome_vendedor_<?= $row['id'] ?>" class="form-label">Nome do Vendedor:</label>
-                                            <textarea class="form-control" id="edit_nome_vendedor_<?= $row['id'] ?>" name="nome_vendedor" rows="3"><?= $row['nome_vendedor'] ?></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="edit_telefone_vendedor_<?= $row['id'] ?>" class="form-label">Telefone do Vendedor:</label>
-                                            <textarea class="form-control" id="edit_telefone_vendedor_<?= $row['id'] ?>" name="telefone_vendedor" rows="3"><?= $row['telefone_vendedor'] ?></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="edit_email_vendedor_<?= $row['id'] ?>" class="form-label">Email do Vendedor:</label>
-                                            <textarea class="form-control" id="edit_email_vendedor_<?= $row['id'] ?>" name="email_vendedor" rows="3"><?= $row['email_vendedor'] ?></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="edit_descricao_<?= $row['id'] ?>" class="form-label">Descrição do Imóvel:</label>
-                                            <textarea class="form-control" id="edit_descricao_<?= $row['id'] ?>" name="descricao" rows="3"><?= $row['descricao'] ?></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="edit_status_<?= $row['id'] ?>" class="form-label">Status:</label>
-                                            <select class="form-select" id="edit_status_<?= $row['id'] ?>" name="status">
-                                                <option value="à_venda" <?= $row['status'] == 'à_venda' ? 'selected' : '' ?>>à venda</option>
-                                                <option value="alugar" <?= $row['status'] == 'alugar' ? 'selected' : '' ?>>alugar</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                    <div class="modal fade" id="editModal<?= $row['id'] ?>" tabindex="-1" aria-labelledby="editModalLabel<?= $row['id'] ?>" aria-hidden="true">
+    <!-- Edit Modal content -->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="editRecord.php">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel<?= $row['id'] ?>">Editar Imóvel</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulário para editar imóvel -->
+                    <input type="hidden" name="recordId" value="<?= $row['id'] ?>">
+                    <div class="mb-3">
+                        <label for="foto" class="form-label">Foto:</label>
+                        <input type="file" class="form-control" id="foto" name="foto">
+                        <img src="<?= $row['foto'] ?>" alt="<?= $row['foto'] ?>" width="100" class="mt-2">
                     </div>
+                    <div class="mb-3">
+                        <label for="endereco" class="form-label">Endereço:</label>
+                        <input type="text" class="form-control" id="endereco" name="endereco" value="<?= $row['endereco'] ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="cidade" class="form-label">Cidade:</label>
+                        <input type="text" class="form-control" id="cidade" name="cidade" value="<?= $row['cidade'] ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="categoria" class="form-label">Categoria:</label>
+                        <select class="form-select" id="categoria" name="categoria">
+                            <option value="Casa" <?= $row['categoria'] == 'Casa' ? 'selected' : '' ?>>Casa</option>
+                            <option value="Apartamento" <?= $row['categoria'] == 'Apartamento' ? 'selected' : '' ?>>Apartamento</option>
+                            <option value="Kitnet" <?= $row['categoria'] == 'Kitnet' ? 'selected' : '' ?>>Kitnet</option>
+                            <option value="Sobrado" <?= $row['categoria'] == 'Sobrado' ? 'selected' : '' ?>>Sobrado</option>
+                            <option value="Mansão" <?= $row['categoria'] == 'Mansão' ? 'selected' : '' ?>>Mansão</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="preco" class="form-label">Preço:</label>
+                        <input type="text" class="form-control" id="preco" name="preco" value="<?= $row['preco'] ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nome_vendedor" class="form-label">Nome do Vendedor:</label>
+                        <input type="text" class="form-control" id="nome_vendedor" name="nome_vendedor" value="<?= $row['nome_vendedor'] ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="telefone_vendedor" class="form-label">Telefone do Vendedor:</label>
+                        <input type="text" class="form-control" id="telefone_vendedor" name="telefone_vendedor" value="<?= $row['telefone_vendedor'] ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email_vendedor" class="form-label">Email do Vendedor:</label>
+                        <input type="text" class="form-control" id="email_vendedor" name="email_vendedor" value="<?= $row['email_vendedor'] ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status:</label>
+                        <select class="form-select" id="status" name="status">
+                            <option value="à_venda">à venda</option>
+                            <option value="alugar">alugar</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Descrição:</label>
+                        <input type="text" class="form-control" id="descricao" name="descricao" value="<?= $row['descricao'] ?>">
+                    </div>
+                    <!-- Adicione outros campos de entrada aqui -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
                 <?php } ?>
             </tbody>
         </table>
@@ -348,4 +353,6 @@ try {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json"></script>
-    <script>
+    
+    </body>
+</html>
