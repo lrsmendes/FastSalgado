@@ -7,6 +7,15 @@ if (!isset($_SESSION["nomeUsuario"])) {
     exit();
 }
 
+// Verificar expiração da sessão
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) { // mudar para 1800, que representa 30 minutos de inatividade
+    session_unset();
+    session_destroy();
+    header("Location: login.php");
+    exit();
+}
+$_SESSION['last_activity'] = time();
+
 $nomeUsuario = $_SESSION["nomeUsuario"];
 $isAdmin = isset($_SESSION["isAdmin"]) && $_SESSION["isAdmin"] == 1;
 
@@ -207,17 +216,7 @@ try {
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p><strong>ID:</strong> <?= $row['id'] ?></p>
-                                    <p><strong>Endereço:</strong> <?= $row['endereco'] ?></p>
-                                    <p><strong>Cidade:</strong> <?= $row['cidade'] ?></p>
-                                    <p><strong>Categoria:</strong> <?= $row['categoria'] ?></p>
-                                    <p><strong>Preço:</strong> <?= $row['preco'] ?></p>
-                                    <p><strong>Nome do Vendedor:</strong> <?= $row['nome_vendedor'] ?></p>
-                                    <p><strong>Telefone do Vendedor:</strong> <?= $row['telefone_vendedor'] ?></p>
-                                    <p><strong>Email do Vendedor:</strong> <?= $row['email_vendedor'] ?></p>
-                                    <p><strong>Status:</strong> <?= $row['status'] ?></p>
-                                    <p><strong>Foto:</strong> <img src="<?= $row['foto'] ?>" alt="<?= $row['foto'] ?>" width="100"></p>
-                                    <p><strong>Descrição:</strong> <?= $row['descricao'] ?></p>
+                                    <img src="<?= $row['foto'] ?>" alt="<?= $row['foto'] ?>" width="400">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>

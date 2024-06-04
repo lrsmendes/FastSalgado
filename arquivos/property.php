@@ -16,39 +16,33 @@
             margin: 0 auto;
             padding: 20px;
         }
-        .property-card {
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .property-card, .image-card {
             background-color: #f8f9fa;
             border-radius: 15px;
             padding: 20px;
             margin-top: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            flex: 1 1 48%;
         }
-        .property-card h1, .property-card p {
+        .property-card h1, .property-card p, .image-card p {
             color: #333;
         }
-        .property-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-        .property-info {
-            flex: 1 1 55%;
+        .property-info, .property-image {
             margin: 10px 0;
             word-wrap: break-word;
         }
-        .property-info p {
+        .property-info p, .image-card p {
             margin: 15px 0;
+            text-align: justify;
         }
-        .property-info strong {
+        .property-info strong, .image-card strong {
             display: block;
             margin-bottom: 5px;
-        }
-        .property-image {
-            flex: 1 1 40%;
-            margin: 10px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
         .property-image img {
             max-width: 100%;
@@ -62,6 +56,20 @@
             width: 200px;
             margin: 20px auto;
             text-align: center;
+        }
+        .icon-container {
+            display: flex;
+            align-items: center;
+            margin-top: 20px; /* Espaço entre descrição e ícones */
+        }
+        .icon-item {
+            display: flex;
+            align-items: center;
+            margin-right: 20px; /* Espaço entre ícones */
+        }
+        .icon {
+            max-width: 50px;
+            margin-right: 10px; /* Espaço entre ícone e texto */
         }
     </style>
 </head>
@@ -104,26 +112,28 @@
                 if ($stmt->rowCount() > 0) {
                     $imovel = $stmt->fetch(PDO::FETCH_ASSOC);
                     
+                    echo "<div class='card-container'>";
                     echo "<div class='property-card'>";
                     echo "<h1>Detalhes do Imóvel</h1>";
-                    echo "<div class='property-content'>";
                     echo "<div class='property-info'>";
-                    echo "<p><strong>Cidade:</strong> {$imovel['cidade']}</p>";
-                    echo "<p><strong>Endereço:</strong> {$imovel['endereco']}</p>";
-                    echo "<p><strong>Categoria:</strong> {$imovel['categoria']}</p>";
-                    echo "<p><strong>Preço:</strong> R$ {$imovel['preco']}</p>";
-                    echo "<p><strong>Status:</strong> {$imovel['status']}</p>";
-                    echo "<p><strong>Descrição:</strong> {$imovel['descricao']}</p>";
+                    echo "<p>{$imovel['descricao']}</p>";
+                    echo "<div class='icon-container'>";
+                    echo "<div class='icon-item'><img src='../cama.png' alt='Cama' class='icon'><h6>Dormitórios</h6></div>";
+                    echo "<div class='icon-item'><img src='../garagem.png' alt='Garagem' class='icon'><h6>Garagens</h6></div>";
+                    echo "<div class='icon-item'><img src='../planta-da-casa.png' alt='Planta' class='icon'><h6>Plantas</h6></div>";
+                    echo "</div>";
+                    echo "</div>";
                     echo "</div>";
 
                     $imagePath = "../php/{$imovel['foto']}";
-                    echo "<div class='property-image'>";
+                    echo "<div class='image-card'>";
                     if (file_exists($imagePath)) {
+                        echo "<div class='property-image'>";
                         echo "<img src='{$imagePath}' alt='{$imovel['descricao']}'>";
+                        echo "</div>";
                     } else {
                         echo "<p>Imagem não encontrada.</p>";
                     }
-                    echo "</div>";
                     echo "</div>";
                     echo "</div>";
                 } else {
