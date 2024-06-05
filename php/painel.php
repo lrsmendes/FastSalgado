@@ -226,11 +226,10 @@ try {
                     </div>
 
                     <!-- Edit Modal -->
-                    <div class="modal fade" id="editModal<?= $row['id'] ?>" tabindex="-1" aria-labelledby="editModalLabel<?= $row['id'] ?>" aria-hidden="true">
-    <!-- Edit Modal content -->
+<div class="modal fade" id="editModal<?= $row['id'] ?>" tabindex="-1" aria-labelledby="editModalLabel<?= $row['id'] ?>" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" action="editRecord.php">
+            <form method="post" action="editRecord.php" enctype="multipart/form-data">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editModalLabel<?= $row['id'] ?>">Editar Imóvel</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -238,6 +237,8 @@ try {
                 <div class="modal-body">
                     <!-- Formulário para editar imóvel -->
                     <input type="hidden" name="recordId" value="<?= $row['id'] ?>">
+                    <input type="hidden" name="currentFoto" value="<?= $row['foto'] ?>">
+
                     <div class="mb-3">
                         <label for="foto" class="form-label">Foto:</label>
                         <input type="file" class="form-control" id="foto" name="foto">
@@ -280,15 +281,14 @@ try {
                     <div class="mb-3">
                         <label for="status" class="form-label">Status:</label>
                         <select class="form-select" id="status" name="status">
-                            <option value="à_venda">à venda</option>
-                            <option value="alugar">alugar</option>
+                            <option value="à_venda" <?= $row['status'] == 'à_venda' ? 'selected' : '' ?>>à venda</option>
+                            <option value="alugar" <?= $row['status'] == 'alugar' ? 'selected' : '' ?>>alugar</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="descricao" class="form-label">Descrição:</label>
                         <input type="text" class="form-control" id="descricao" name="descricao" value="<?= $row['descricao'] ?>">
                     </div>
-                    <!-- Adicione outros campos de entrada aqui -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -298,6 +298,7 @@ try {
         </div>
     </div>
 </div>
+
                 <?php } ?>
             </tbody>
         </table>

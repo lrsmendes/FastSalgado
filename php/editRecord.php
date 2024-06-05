@@ -24,34 +24,43 @@ try {
         $email_vendedor = $_POST['email_vendedor'];
         $descricao = $_POST['descricao'];
         $status = $_POST['status'];
+        $currentFoto = $_POST['currentFoto'];  // Campo oculto com a foto atual
 
         // Verifica se todos os campos obrigatórios foram preenchidos
         if ($endereco && $cidade && $categoria && $preco && $nome_vendedor && $telefone_vendedor && $email_vendedor && $descricao && $status) {
             
-            // Inicialmente, $targetFile é null
-            $targetFile = null;
+            $targetFile = $currentFoto; // Manter a foto atual por padrão
 
             // Verifica se foi enviada uma nova foto
             if (!empty($_FILES['foto']['name'])) {
                 $targetDir = "uploads/";
-                $targetFile = $targetDir . basename($_FILES["foto"]["name"]);
+                $imageFileType = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
+                $newFileName = uniqid() . '.' . $imageFileType;
+                $targetFile = $targetDir . $newFileName;
+
+                // Verifica se o arquivo é uma imagem real
+                $check = getimagesize($_FILES["foto"]["tmp_name"]);
+                if ($check === false) {
+                    echo "Erro: O arquivo enviado não é uma imagem.";
+                    exit();
+                }
+
+                // Verifica extensões permitidas
+                $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+                if (!in_array($imageFileType, $allowedExtensions)) {
+                    echo "Erro: Apenas arquivos JPG, JPEG, PNG e GIF são permitidos.";
+                    exit();
+                }
 
                 // Tenta mover o arquivo para o diretório de destino
                 if (!move_uploaded_file($_FILES["foto"]["tmp_name"], $targetFile)) {
-                    $targetFile = null; // Se o upload falhar, $targetFile deve ser null
+                    echo "Erro ao fazer upload da imagem.";
+                    exit();
                 }
             }
 
             // Atualizar os dados no banco de dados
-            $query = "UPDATE imoveis SET endereco = ?, cidade = ?, categoria = ?, preco = ?, nome_vendedor = ?, telefone_vendedor = ?, email_vendedor = ?, descricao = ?, status = ?";
-
-            // Se uma nova foto foi enviada, incluí-la na query
-            if ($targetFile !== null) {
-                $query .= ", foto = ?";
-            }
-
-            $query .= " WHERE id = ?";
-
+            $query = "UPDATE imoveis SET endereco = ?, cidade = ?, categoria = ?, preco = ?, nome_vendedor = ?, telefone_vendedor = ?, email_vendedor = ?, descricao = ?, status = ?, foto = ? WHERE id = ?";
             $preparedStatement = $conn->prepare($query);
 
             $preparedStatement->bindParam(1, $endereco, PDO::PARAM_STR);
@@ -63,13 +72,8 @@ try {
             $preparedStatement->bindParam(7, $email_vendedor, PDO::PARAM_STR);
             $preparedStatement->bindParam(8, $descricao, PDO::PARAM_STR);
             $preparedStatement->bindParam(9, $status, PDO::PARAM_STR);
-
-            if ($targetFile !== null) {
-                $preparedStatement->bindParam(10, $targetFile, PDO::PARAM_STR);
-                $preparedStatement->bindParam(11, $recordId, PDO::PARAM_INT);
-            } else {
-                $preparedStatement->bindParam(10, $recordId, PDO::PARAM_INT);
-            }
+            $preparedStatement->bindParam(10, $targetFile, PDO::PARAM_STR);
+            $preparedStatement->bindParam(11, $recordId, PDO::PARAM_INT);
 
             $preparedStatement->execute();
 
